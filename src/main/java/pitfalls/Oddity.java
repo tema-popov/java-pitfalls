@@ -1,7 +1,10 @@
+package pitfalls;
+
 import org.junit.Assert;
 import org.junit.Test;
-
+import utils.Utils;
 import java.util.Random;
+
 
 import static org.hamcrest.CoreMatchers.*;
 
