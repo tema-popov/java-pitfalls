@@ -64,6 +64,13 @@ public class Oddity {
         Assert.assertThat(fastGoodIsOdd(-1), is(true));
     }
 
+    /*
+    The second version may run much faster than the first, depending on what platform and virtual machine
+    you are using, and is unlikely to run slower. As a general rule, the divide and remainder operations
+    are slow compared to other arithmetic and logical operations. It's a bad idea to optimize prematurely,
+    but in this case, the faster version is as clear as the original, so there is no reason to prefer the original.
+    */
+
     @Test
     public void compareTime() {
         Utils.timeIt(() -> goodIsOdd(RANDOM.nextInt()), "goodIsOdd");
