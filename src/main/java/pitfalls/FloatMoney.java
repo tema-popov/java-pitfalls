@@ -9,9 +9,10 @@ import static org.hamcrest.CoreMatchers.*;
 
 /**
  *  [JP, 2.2]
+ *
+ *  Lets try to subtract 1 dollar and 10 cents from 2 dollar.
  */
 public class FloatMoney {
-
     @Test
     public void testFloat() {
         Assert.assertThat(2.00 - 1.10, equalTo(0.90));
@@ -26,7 +27,7 @@ public class FloatMoney {
 
 
     @Test
-    public void firstFixTry() {
+    public void firstTryToFix() {
         Assert.assertThat(String.format("%.2f", 2.00 - 1.10), is("0.90"));
         // It worked, but it's poor solution - still uses binary floating-point.
         // Calculation error could actually accumulated during many floating-point arithmetic operations.
@@ -55,7 +56,17 @@ public class FloatMoney {
         Assert.assertThat(200 - 110, equalTo(90));
 
         // Second way – use exact decimal arithmetic types, for example BigDecimal in java.
-        Assert.assertThat(new BigDecimal("2.00").subtract(new BigDecimal("1.10")), equalTo(new BigDecimal("0.90")));
+
+        try {
+            Assert.assertThat(new BigDecimal("2.00").subtract(new BigDecimal("1.10")), equalTo(new BigDecimal("0.9")));
+        } catch (AssertionError err) {
+            // ERROR Expected: <0.9> but: was <0.90>
+            // Kind of tricky moment – method equalsTo considers two BigDecimal objects equal only
+            // if they are equal in value and scale (thus 0.9 is not equal to 0.90 when compared by this method).
+            // So, we need to use method compareTo
+            Assert.assertThat(new BigDecimal("2.00").subtract(new BigDecimal("1.10")).compareTo(new BigDecimal("0.9")), is(0));
+        }
+
 
     }
 
