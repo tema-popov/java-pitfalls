@@ -3,6 +3,7 @@ Java Pitfalls
 
   1. How you actually check oddity of a integer (`Oddity`)
   2. Floating number rounding errors and correct way of representing currency in programming (`FloatMoney`)
+  3. Overflows in numeric expressions (`LongDivision`)
 
 
 References
